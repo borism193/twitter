@@ -1,11 +1,13 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: %i[ show edit update destroy ]
-  
+  before_action :set_tweet, only: %i[ show edit update destroy ]  
+  skip_before_action :verify_authenticity_token
+
 
   # GET /tweets or /tweets.json
   def index
     @tweets = Tweet.order(created_at: :desc).page(params[:page])
     @tweet = Tweet.new
+    
   end
 
   # GET /tweets/1 or /tweets/1.json
@@ -14,7 +16,8 @@ class TweetsController < ApplicationController
 
   # GET /tweets/new
   def new
-    @tweet = current_user.tweets.build
+    @tweet = current_user.tweets.build  
+    @like = Like.new
   end
 
   # GET /tweets/1/edit
@@ -23,7 +26,8 @@ class TweetsController < ApplicationController
 
   # POST /tweets or /tweets.json
   def create
-    @tweet = current_user.tweets.build(tweet_params)
+    @tweet = current_user.tweets.create(tweet_params)
+    
 
     respond_to do |format|
       if @tweet.save
@@ -66,6 +70,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:content)
+      params.require(:tweet).permit(:content, :counters)
     end
 end

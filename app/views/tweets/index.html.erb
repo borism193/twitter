@@ -21,6 +21,16 @@
         <td><%= link_to 'Show', tweet %></td>
         <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>  
         <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% if user_signed_in? %>
+        <% pre_like = tweet.likes.find { |like| like.user_id == current_user.id} %>
+          <% if pre_like %>
+            <%= button_to 'Unlike', tweet_like_path(tweet, pre_like), method: :delete %>
+          <% else %>
+            <%= button_to 'Like', tweet_likes_path(tweet), method: :tweet %>
+          <% end %>
+      <% end %>
+        <p><%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+       
       
       </div>
     <% end %>
