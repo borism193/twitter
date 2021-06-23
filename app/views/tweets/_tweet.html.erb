@@ -1,0 +1,29 @@
+<div>
+  <div class="mx-auto mt-5" style="width: 200px;">
+
+<!-- <div>Retweeted by <= current_user.user_name %></div> ---> 
+
+
+    
+        <%=image_tag("#{tweet.user.avatar}",style:"width:42px;height:42px;" )%>
+        <td> <%=tweet.user.user_name %> </td> 
+        <td> <%= link_to "#{distance_of_time_in_words(tweet.created_at, Time.now)   }", tweet %> </td>
+        <p class='pt-2 pb-2'> <%= tweet.content %> </p>
+
+       <% if user_signed_in? && tweet.user_id == current_user.id %>
+        <td><%= link_to 'Edit', edit_tweet_path(tweet) %></td>  
+        <td><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      
+      <% if user_signed_in? %>
+        <% pre_like = tweet.likes.find { |like| like.user_id == current_user.id} %>
+          <% if pre_like %>
+            <%= button_to 'Unlike', tweet_like_path(tweet, pre_like), method: :delete %>
+          <% else %>
+            <%= button_to 'Like', tweet_likes_path(tweet), method: :tweet %>
+          <% end %>
+      <% end %>
+        <p><%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+
+        
+</div>

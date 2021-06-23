@@ -1,11 +1,11 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: %i[ show edit update destroy ]  
-  skip_before_action :verify_authenticity_token
+  before_action :set_tweet, only: %i[ show edit update destroy  retweet]  
+  
 
 
   # GET /tweets or /tweets.json
   def index
-    @tweets = Tweet.order(created_at: :desc).page(params[:page])
+    @tweets = @user.followers.paginate(page: params[:page])
     @tweet = Tweet.new
     
   end
@@ -62,6 +62,24 @@ class TweetsController < ApplicationController
     end
   end
 
+  #def retweet
+   # original_tweet = Tweet.find(params[:id])
+
+    #retweet = Tweet.create(user_id:current_user.id,
+    #content: original_tweet.content,
+    #retweet_id:original_tweet.id);
+
+  #if retweet.save
+      #Tweet.create(user_id:current_user.id,
+     # content: original_tweet.content,
+      #retweet_id:original_tweet.id);
+      #redirect_to tweet_path, alert: 'Retweeted!'
+    #else
+     # redirect_to root_path, alert: 'Can not retweet'
+    #end
+ # end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tweet
@@ -70,6 +88,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:content, :counters)
+      params.require(:tweet).permit(:user_id, :content, :counters, :tweet_id, :retweet_id )
     end
 end

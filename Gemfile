@@ -10,6 +10,7 @@ gem 'sqlite3', group: :development
 gem 'pg', group: :production
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
+gem 'activeadmin'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -27,6 +28,8 @@ gem 'kaminari'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
+gem "will_paginate-bootstrap"
+gem "will_paginate"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

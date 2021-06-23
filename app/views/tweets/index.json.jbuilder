@@ -1,1 +1,5 @@
-json.array! @tweets, partial: "tweets/tweet", as: :tweet
+json.array!(@tweets) do |tweet|
+    json.extract! tweet, :id, :user_id, :body, :tweet_id
+    json.url tweet_url(tweet, format: :json)
+  end
+  

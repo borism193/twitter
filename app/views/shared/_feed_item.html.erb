@@ -1,0 +1,19 @@
+<li class="tweet clearfix">
+ <%= link_to image_tag("#{feed_item.user.avatar}",style:"width:42px;height:42px;" )%>
+  <div class="content">
+    <div class="user">
+      <%= link_to feed_item.user.user_name, feed_item.user %>
+    </div>
+    <div class="tweet-content">
+      <%= feed_item.content %>
+    </div>
+    <div class="tweet-footer">
+      <time><%= time_ago_in_words(feed_item.created_at) %> ago.</time>
+      <% if @user == current_user %>
+      <div class="tweet-actions">
+        <%= link_to "delete", feed_item, method: :delete, data: { confirm: "You sure?" }, title: feed_item.content %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</li>
