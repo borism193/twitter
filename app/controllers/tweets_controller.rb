@@ -5,7 +5,7 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
-    @tweets = @user.followers.paginate(page: params[:page])
+    @tweets = Tweet.order(created_at: :desc).page(params[:page])
     @tweet = Tweet.new
     
   end
